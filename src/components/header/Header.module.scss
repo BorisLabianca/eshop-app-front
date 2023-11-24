@@ -62,6 +62,8 @@ header {
 
     .cart a {
       display: flex;
+      align-items: center;
+      gap: 0.5rem;
       color: #fff;
       position: relative;
       &:hover {
@@ -195,6 +197,7 @@ header {
           left: 5rem;
           font-weight: 500;
           color: #fff;
+          margin-left: 0.5rem;
         }
       }
     }

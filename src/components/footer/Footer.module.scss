@@ -5,8 +5,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 5px;
   height: 8rem;
   p {
     color: #fff;
+  }
+  a {
+    color: #fff;
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+  }
+  a:hover {
+    color: lightcoral;
   }
 }

@@ -17,7 +17,12 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
-        <Footer />
+        <Footer
+          tech={"React"}
+          techSite={"https://reactjs.org/"}
+          author={"Boris"}
+          linkedin={"https://www.linkedin.com/in/boris-labianca-01a52871/"}
+        />
       </Router>
     </>
   );

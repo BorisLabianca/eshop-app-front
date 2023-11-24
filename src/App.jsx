@@ -1,13 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Pages
-import { Home, Contact } from "./pages/index";
+import { Home, Contact, Login, Register, Reset } from "./pages/index";
 
 // Components
 import { Footer, Header } from "./components/index";
 
 import "./App.css";
-
 function App() {
   return (
     <>
@@ -16,6 +15,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/reset-password" element={<Reset />} />
         </Routes>
         <Footer
           tech={"React"}

@@ -4,7 +4,11 @@ import styles from "./auth.module.scss";
 import { FaGoogle } from "react-icons/fa";
 import Card from "../../components/card/Card";
 import { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
 import Loader from "../../components/loader/Loader";
@@ -31,6 +35,21 @@ const Login = () => {
       })
       .catch((error) => {
         setIsLoading(false);
+        toast.error(error.message);
+      });
+  };
+
+  // Google signin
+  const provider = new GoogleAuthProvider();
+  const signInWithGoogle = (event) => {
+    event.preventDefault();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        toast.success("Login successful.");
+        navigate("/");
+      })
+      .catch((error) => {
         toast.error(error.message);
       });
   };
@@ -68,7 +87,10 @@ const Login = () => {
               </div>
               <p>-- or --</p>
             </form>
-            <button className="--btn --btn-danger --btn-block">
+            <button
+              className="--btn --btn-danger --btn-block"
+              onClick={signInWithGoogle}
+            >
               <FaGoogle color="#fff" />{" "}
               <p className="--text-light">Login With Google</p>
             </button>

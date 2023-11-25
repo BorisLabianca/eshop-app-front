@@ -1,14 +1,13 @@
 import resetImg from "../../assets/forgot.png";
 import { Link } from "react-router-dom";
 import styles from "./auth.module.scss";
-import { FaGoogle } from "react-icons/fa";
 import Card from "../../components/card/Card";
 
 const Reset = () => {
   return (
     <section className={`container ${styles.auth}`}>
       <div className={styles.img}>
-        <img src={resetImg} alt="Login" width="400px" />
+        <img src={resetImg} alt="Forgot" width="400px" />
       </div>
       <Card>
         <div className={styles.form}>

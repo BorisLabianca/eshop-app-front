@@ -3,11 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./auth.module.scss";
 import Card from "../../components/card/Card";
 import { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import Loader from "../../components/loader/Loader";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -43,7 +42,6 @@ const Register = () => {
 
   return (
     <>
-      <ToastContainer />
       {isLoading && <Loader />}
       <section className={`container ${styles.auth}`}>
         <Card>

@@ -7,7 +7,11 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { SET_ACTIVE_USER } from "../../redux/features/authSlice";
+import {
+  SET_ACTIVE_USER,
+  REMOVE_ACTIVE_USER,
+} from "../../redux/features/authSlice";
+import ShowOnLogin, { ShowOnLogout } from "../hiddenLinks/HiddenLinks";
 
 const logo = (
   <div className={styles.logo}>
@@ -80,9 +84,10 @@ const Header = () => {
         }
       } else {
         setUserName("");
+        dispatch(REMOVE_ACTIVE_USER());
       }
     });
-  }, []);
+  }, [dispatch, userName]);
 
   return (
     <header>
@@ -119,22 +124,32 @@ const Header = () => {
           </ul>
           <div className={styles["header-right"]} onClick={hideMenu}>
             <span className={styles.links}>
-              <NavLink to="/login" className={activeLink}>
-                Login
-              </NavLink>
-              <a href="#">
-                <FaUserCircle size={16} />
-                Hi, {userName}
-              </a>
-              <NavLink to="/register" className={activeLink}>
-                Register
-              </NavLink>
-              <NavLink to="/order-history" className={activeLink}>
-                My Orders
-              </NavLink>
-              <NavLink to="/" onClick={logoutUser}>
-                Log Out
-              </NavLink>
+              <ShowOnLogout>
+                <NavLink to="/login" className={activeLink}>
+                  Login
+                </NavLink>
+              </ShowOnLogout>
+              <ShowOnLogin>
+                <a
+                  href="/"
+                  style={{
+                    color: "#ff7722",
+                  }}
+                >
+                  <FaUserCircle size={16} />
+                  <span>Hi, {userName}</span>
+                </a>
+              </ShowOnLogin>
+              <ShowOnLogin>
+                <NavLink to="/order-history" className={activeLink}>
+                  My Orders
+                </NavLink>{" "}
+              </ShowOnLogin>
+              <ShowOnLogin>
+                <NavLink to="/" onClick={logoutUser}>
+                  Log Out
+                </NavLink>
+              </ShowOnLogin>
             </span>
             {cart}
           </div>

@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { SET_ACTIVE_USER } from "../../redux/features/authSlice";
 
 const logo = (
   <div className={styles.logo}>
@@ -30,6 +32,7 @@ const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : "");
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [menuVisible, setMenuVisible] = useState(false);
   const [userName, setUserName] = useState("");
 
@@ -56,9 +59,25 @@ const Header = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        const uid = user.uid;
-        console.log(user.uid);
-        setUserName(user.displayName);
+        if (user.displayName === null) {
+          setUserName(user.email.split("@")[0]);
+          dispatch(
+            SET_ACTIVE_USER({
+              email: user.email,
+              userName: user.email.split("@")[0],
+              userId: user.uid,
+            })
+          );
+        } else {
+          setUserName(user.displayName);
+          dispatch(
+            SET_ACTIVE_USER({
+              email: user.email,
+              userName: user.email.split("@")[0],
+              userId: user.uid,
+            })
+          );
+        }
       } else {
         setUserName("");
       }

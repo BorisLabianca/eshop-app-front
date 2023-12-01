@@ -12,6 +12,7 @@ import {
   REMOVE_ACTIVE_USER,
 } from "../../redux/features/authSlice";
 import ShowOnLogin, { ShowOnLogout } from "../hiddenLinks/HiddenLinks";
+import { AdminOnlyLink } from "../adminOnlyRoute/AdminOnlyRoute";
 
 const logo = (
   <div className={styles.logo}>
@@ -64,11 +65,16 @@ const Header = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         if (user.displayName === null) {
-          setUserName(user.email.split("@")[0]);
+          setUserName(
+            user.email.split("@")[0].charAt(0).toUpperCase() +
+              user.email.split("@")[0].slice(1)
+          );
           dispatch(
             SET_ACTIVE_USER({
               email: user.email,
-              userName: user.email.split("@")[0],
+              userName:
+                user.email.split("@")[0].charAt(0).toUpperCase() +
+                user.email.split("@")[0].slice(1),
               userId: user.uid,
             })
           );
@@ -77,7 +83,7 @@ const Header = () => {
           dispatch(
             SET_ACTIVE_USER({
               email: user.email,
-              userName: user.email.split("@")[0],
+              userName: user.displayName,
               userId: user.uid,
             })
           );
@@ -111,6 +117,13 @@ const Header = () => {
               {logo}
               <FaTimes size={22} color="#fff" onClick={hideMenu} />
             </li>
+            <AdminOnlyLink>
+              <li>
+                <Link to="/admin/home">
+                  <button className="--btn --btn-primary">Admin</button>
+                </Link>
+              </li>
+            </AdminOnlyLink>
             <li>
               <NavLink to="/" className={activeLink}>
                 Home

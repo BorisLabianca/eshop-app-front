@@ -70,7 +70,7 @@ const AddProduct = () => {
         category: product.category,
         brand: product.brand,
         description: product.description,
-        createAt: Timestamp.now().toDate(),
+        createdAt: Timestamp.now().toDate(),
       });
       setIsLoading(false);
       setUploadProgress(0);

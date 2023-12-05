@@ -1,10 +1,19 @@
 import { useEffect, useState } from "react";
 import styles from "./ViewProducts.module.scss";
 import { toast } from "react-toastify";
-import { db } from "../../../firebase/config";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { db, storage } from "../../../firebase/config";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import Loader from "../../loader/Loader";
+import { deleteObject, ref } from "firebase/storage";
 
 const ViewProducts = () => {
   const [products, setProducts] = useState([]);
@@ -33,12 +42,24 @@ const ViewProducts = () => {
     }
   };
 
+  const deleteProduct = async (id, imageURL) => {
+    try {
+      await deleteDoc(doc(db, "products", id));
+      const storageRef = ref(storage, imageURL);
+      deleteObject(storageRef);
+      toast.success("Product deleted successfully.");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   useEffect(() => {
     getProducts();
   }, []);
 
   return (
     <>
+      {isLoading && <Loader />}
       <div className={styles.table}>
         <h2>All Products</h2>
         {products.length === 0 ? (
@@ -71,12 +92,16 @@ const ViewProducts = () => {
                     <td>{name}</td>
                     <td>{category}</td>
                     <td>${price}</td>
-                    <td>
+                    <td className={styles.icon}>
                       <Link to="/admin/add-product">
                         <FaEdit color="green" size={20} />
                       </Link>
                       &nbsp;
-                      <FaTrashAlt color="red" size={18} />
+                      <FaTrashAlt
+                        color="red"
+                        size={18}
+                        onClick={() => deleteProduct(id, imageURL)}
+                      />
                     </td>
                   </tr>
                 );

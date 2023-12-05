@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import Loader from "../../loader/Loader";
 import { deleteObject, ref } from "firebase/storage";
+import Notiflix from "notiflix";
 
 const ViewProducts = () => {
   const [products, setProducts] = useState([]);
@@ -51,6 +52,26 @@ const ViewProducts = () => {
     } catch (error) {
       toast.error(error.message);
     }
+  };
+
+  const confirmDelete = (id, imageURL) => {
+    Notiflix.Confirm.show(
+      "Delete Product???",
+      "You are about to delete this product. Are you sure?",
+      "Delete",
+      "Cancel",
+      function okCb() {
+        deleteProduct(id, imageURL);
+      },
+      function cancelCb() {},
+      {
+        width: "320px",
+        borderRadius: "5px",
+        titleColor: "orangered",
+        okButtonBackground: "orangered",
+        cssAnimationStyle: "zoom",
+      }
+    );
   };
 
   useEffect(() => {
@@ -92,7 +113,7 @@ const ViewProducts = () => {
                     <td>{name}</td>
                     <td>{category}</td>
                     <td>${price}</td>
-                    <td className={styles.icon}>
+                    <td className={styles.icons}>
                       <Link to="/admin/add-product">
                         <FaEdit color="green" size={20} />
                       </Link>
@@ -100,7 +121,7 @@ const ViewProducts = () => {
                       <FaTrashAlt
                         color="red"
                         size={18}
-                        onClick={() => deleteProduct(id, imageURL)}
+                        onClick={() => confirmDelete(id, imageURL)}
                       />
                     </td>
                   </tr>

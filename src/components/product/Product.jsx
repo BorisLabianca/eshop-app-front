@@ -1,8 +1,20 @@
+import { useDispatch, useSelector } from "react-redux";
+import useFetchCollection from "../../customHooks/useFetchCollection";
 import styles from "./Product.module.scss";
 import ProductFilter from "./productFilter/ProductFilter";
 import ProductList from "./productList/ProductList";
+import { STORE_PRODUCTS } from "../../redux/features/productSlice";
+import { useEffect } from "react";
 
 const Product = () => {
+  const { data, isLoading } = useFetchCollection("products");
+  const dispatch = useDispatch();
+  const { products } = useSelector((store) => store.product);
+
+  useEffect(() => {
+    dispatch(STORE_PRODUCTS({ products: data }));
+  }, [data, dispatch]);
+
   return (
     <section>
       <div className={`container ${styles.product}`}>
@@ -10,7 +22,7 @@ const Product = () => {
           <ProductFilter />
         </aside>
         <div className={styles.content}>
-          <ProductList />
+          <ProductList products={products} />
         </div>
       </div>
     </section>

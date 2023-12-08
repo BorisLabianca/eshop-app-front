@@ -1,13 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./ProductList.module.scss";
 import { BsFillGridFill } from "react-icons/bs";
 import { FaListAlt } from "react-icons/fa";
 import Search from "../../search/Search";
 import ProductItem from "../productItem/ProductItem";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  FILTER_BY_SEARCH,
+  SORT_PRODUCTS,
+} from "../../../redux/features/filterSlice";
 
 const ProductList = ({ products }) => {
+  const dispatch = useDispatch();
+  const { filteredProducts } = useSelector((store) => store.filter);
   const [grid, setGrid] = useState(true);
   const [searchResult, setSearchResult] = useState("");
+  const [sorts, setSorts] = useState("latest");
+
+  useEffect(() => {
+    dispatch(FILTER_BY_SEARCH({ products, searchResult }));
+  }, [searchResult, products, dispatch]);
+
+  useEffect(() => {
+    dispatch(SORT_PRODUCTS({ products, sorts }));
+  }, [sorts, products, dispatch]);
 
   return (
     <div className={styles["product-list"]} id="product">
@@ -20,7 +36,8 @@ const ProductList = ({ products }) => {
           />
           <FaListAlt size={24} color="#0066d4" onClick={() => setGrid(false)} />
           <p>
-            <b>10</b> Products found.
+            <b>{filteredProducts.length}</b> Product
+            {filteredProducts.length !== 1 && "s"} found.
           </p>
         </div>
         <div>
@@ -31,7 +48,10 @@ const ProductList = ({ products }) => {
         </div>
         <div className={styles.sort}>
           <label>Sort by:</label>
-          <select>
+          <select
+            value={sorts}
+            onChange={(event) => setSorts(event.target.value)}
+          >
             <option value="latest">Latest</option>
             <option value="lowest-price">Lowest Price</option>
             <option value="highest-price">Highest Price</option>
@@ -45,7 +65,7 @@ const ProductList = ({ products }) => {
           <p>No products found.</p>
         ) : (
           <>
-            {products.map((product) => {
+            {filteredProducts.map((product) => {
               return (
                 <div key={product.id}>
                   <ProductItem {...product} grid={grid} product={product} />

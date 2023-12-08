@@ -1,6 +1,7 @@
 .product {
   display: flex;
   position: relative;
+  min-height: calc(100vh - 8rem * 3);
 
   .filter {
     width: 20%;

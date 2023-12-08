@@ -10,6 +10,7 @@ import { Footer, Header } from "./components/index";
 import "./App.css";
 import AdminOnlyRoute from "./components/adminOnlyRoute/AdminOnlyRoute";
 import FallBackPage from "./pages/FallBackPage";
+import ProductDetails from "./components/product/productDetails/ProductDetails";
 function App() {
   return (
     <>
@@ -29,7 +30,8 @@ function App() {
                 <Admin />
               </AdminOnlyRoute>
             }
-          />{" "}
+          />
+          <Route path="/product-details/:id" element={<ProductDetails />} />
           <Route path="*" element={<FallBackPage />} />
         </Routes>
         <Footer

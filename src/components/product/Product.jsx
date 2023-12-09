@@ -7,23 +7,33 @@ import {
   STORE_PRODUCTS,
   GET_PRICE_RANGE,
 } from "../../redux/features/productSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import spinner from "../../assets/spinner.jpg";
+import { FaCogs } from "react-icons/fa";
 
 const Product = () => {
   const { data, isLoading } = useFetchCollection("products");
   const dispatch = useDispatch();
   const { products } = useSelector((store) => store.product);
+  const [showFilter, setShowFilter] = useState(false);
 
   useEffect(() => {
     dispatch(STORE_PRODUCTS({ products: data }));
     dispatch(GET_PRICE_RANGE({ products: data }));
   }, [data, dispatch]);
 
+  const toggleFilters = () => {
+    setShowFilter(!showFilter);
+  };
+
   return (
     <section>
       <div className={`container ${styles.product}`}>
-        <aside className={styles.filter}>
+        <aside
+          className={
+            showFilter ? `${styles.filter} ${styles.show}` : `${styles.filter}`
+          }
+        >
           <ProductFilter />
         </aside>
         <div className={styles.content}>
@@ -37,6 +47,12 @@ const Product = () => {
           ) : (
             <ProductList products={products} />
           )}
+          <div className={styles.icon} onClick={toggleFilters}>
+            <FaCogs color="orangered" size={20} />
+            <p>
+              <b>{showFilter ? "Hide Filters" : "Show Filters"}</b>
+            </p>
+          </div>
         </div>
       </div>
     </section>

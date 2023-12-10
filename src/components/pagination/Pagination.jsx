@@ -47,7 +47,7 @@ const Pagination = ({
       >
         Prev
       </li>
-      <li>
+      <>
         {pageNumbers.map((num) => {
           if (num < maxPageNumberLimit + 1 && num > minPageNumberLimit) {
             return (
@@ -61,7 +61,7 @@ const Pagination = ({
             );
           }
         })}
-      </li>
+      </>
       <li
         onClick={goNext}
         className={

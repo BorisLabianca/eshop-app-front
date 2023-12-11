@@ -5,8 +5,16 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { toast } from "react-toastify";
 import spinner from "../../../assets/spinner.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  ADD_TO_CART,
+  CALCULATE_TOTAL_QUANTITY,
+  DECREASE_CART,
+  REMOVE_FROM_CART,
+} from "../../../redux/features/cartSlice";
 
 const ProductDetails = () => {
+  const dispatch = useDispatch();
   const { id } = useParams();
   const [product, setProduct] = useState(null);
 
@@ -20,6 +28,24 @@ const ProductDetails = () => {
     } else {
       toast.error("Product not found...");
     }
+  };
+
+  const { cartItems } = useSelector((state) => state.cart);
+  const cart = cartItems.find((item) => item.id === id);
+
+  const addToCart = (product) => {
+    dispatch(ADD_TO_CART(product));
+    dispatch(CALCULATE_TOTAL_QUANTITY());
+  };
+
+  const decreaseCart = (product) => {
+    dispatch(DECREASE_CART(product));
+    dispatch(CALCULATE_TOTAL_QUANTITY());
+  };
+
+  const removeFromCart = (product) => {
+    dispatch(REMOVE_FROM_CART(product));
+    dispatch(CALCULATE_TOTAL_QUANTITY());
   };
 
   useEffect(() => {
@@ -56,14 +82,40 @@ const ProductDetails = () => {
                 <p>
                   <b>Brand:</b> {product.brand}
                 </p>
-                <div className={styles.count}>
-                  <button className="--btn">-</button>
-                  <p>
-                    <b>0</b>
-                  </p>
-                  <button className="--btn">+</button>
-                </div>
-                <button className="--btn --btn-danger">Add To Cart</button>
+                {cart && (
+                  <div className={styles.count}>
+                    <button
+                      className="--btn"
+                      onClick={() => decreaseCart(product)}
+                    >
+                      -
+                    </button>
+                    <p>
+                      <b>{cart ? cart.cartQuantity : 0}</b>
+                    </p>
+                    <button
+                      className="--btn"
+                      onClick={() => addToCart(product)}
+                    >
+                      +
+                    </button>
+                  </div>
+                )}
+                {cart ? (
+                  <button
+                    className="--btn --btn-danger"
+                    onClick={() => removeFromCart(product)}
+                  >
+                    Remove From Cart
+                  </button>
+                ) : (
+                  <button
+                    className="--btn --btn-danger"
+                    onClick={() => addToCart(product)}
+                  >
+                    Add To Cart
+                  </button>
+                )}
               </div>
             </div>
           </>

@@ -6,6 +6,7 @@ import Card from "../../components/card/Card";
 import {
   ADD_TO_CART,
   CALCULATE_TOTAL,
+  CALCULATE_TOTAL_QUANTITY,
   CLEAR_CART,
   DECREASE_CART,
   REMOVE_FROM_CART,
@@ -35,6 +36,7 @@ const Cart = () => {
 
   useEffect(() => {
     dispatch(CALCULATE_TOTAL());
+    dispatch(CALCULATE_TOTAL_QUANTITY());
   }, [cartItems, dispatch]);
 
   return (
@@ -121,9 +123,11 @@ const Cart = () => {
                 </div>
                 <br />
                 <Card cardClass={styles.card}>
-                  <p>{`Cart item${
-                    cartTotalQuantity > 1 ? "s" : ""
-                  }: ${cartTotalQuantity}`}</p>
+                  <p>
+                    <b>{`Cart item${
+                      cartTotalQuantity > 1 ? "s" : ""
+                    }: ${cartTotalQuantity}`}</b>
+                  </p>
                   <div className={styles.text}>
                     <h4>Total:</h4>
                     <h3>${cartTotalAmount.toFixed(2)}</h3>

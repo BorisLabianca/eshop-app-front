@@ -1,14 +1,23 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./Cart.module.scss";
 import { Link } from "react-router-dom";
 import { FaTrashAlt } from "react-icons/fa";
 import Card from "../../components/card/Card";
+import { ADD_TO_CART, DECREASE_CART } from "../../redux/features/cartSlice";
 
 const Cart = () => {
+  const dispatch = useDispatch();
   const { cartItems, cartTotalQuantity, cartTotalAmount } = useSelector(
     (store) => store.cart
   );
-  console.log(cartItems);
+  const increaseCart = (item) => {
+    dispatch(ADD_TO_CART(item));
+  };
+
+  const decreaseCart = (item) => {
+    dispatch(DECREASE_CART(item));
+  };
+
   return (
     <section>
       <div className={`container ${styles.table}`}>
@@ -53,13 +62,19 @@ const Cart = () => {
                       <td>${price}</td>
                       <td>
                         <div className={styles.count}>
-                          <button className="--btn --btn-danger">
+                          <button
+                            className="--btn --btn-danger"
+                            onClick={() => decreaseCart(item)}
+                          >
                             <b>-</b>
                           </button>
                           <p>
                             <b>{cartQuantity}</b>
                           </p>
-                          <button className="--btn --btn-danger">
+                          <button
+                            className="--btn --btn-danger"
+                            onClick={() => increaseCart(item)}
+                          >
                             <b>+</b>
                           </button>
                         </div>

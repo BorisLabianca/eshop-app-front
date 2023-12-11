@@ -2,7 +2,10 @@ import { Link } from "react-router-dom";
 import Card from "../../card/Card";
 import styles from "./ProductItem.module.scss";
 import { useDispatch } from "react-redux";
-import { ADD_TO_CART } from "../../../redux/features/cartSlice";
+import {
+  ADD_TO_CART,
+  CALCULATE_TOTAL_QUANTITY,
+} from "../../../redux/features/cartSlice";
 
 const ProductItem = ({
   grid,
@@ -24,6 +27,7 @@ const ProductItem = ({
 
   const addToCart = (product) => {
     dispatch(ADD_TO_CART(product));
+    dispatch(CALCULATE_TOTAL_QUANTITY());
   };
 
   return (

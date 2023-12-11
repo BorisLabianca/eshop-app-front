@@ -6,13 +6,14 @@ import { useEffect, useState } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   SET_ACTIVE_USER,
   REMOVE_ACTIVE_USER,
 } from "../../redux/features/authSlice";
 import ShowOnLogin, { ShowOnLogout } from "../hiddenLinks/HiddenLinks";
 import { AdminOnlyLink } from "../adminOnlyRoute/AdminOnlyRoute";
+import { CALCULATE_TOTAL_QUANTITY } from "../../redux/features/cartSlice";
 
 const logo = (
   <div className={styles.logo}>
@@ -24,26 +25,32 @@ const logo = (
   </div>
 );
 
-const cart = (
-  <span className={styles.cart}>
-    <Link to="/cart">
-      Cart <FaShoppingCart size={20} />
-      <p>0</p>
-    </Link>
-  </span>
-);
-
 const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : "");
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { cartTotalQuantity } = useSelector((state) => state.cart);
   const [menuVisible, setMenuVisible] = useState(false);
   const [userName, setUserName] = useState("");
+  const [scrollPage, setScrollPage] = useState(false);
+
+  useEffect(() => {
+    dispatch(CALCULATE_TOTAL_QUANTITY());
+  }, []);
+
+  const fixNavBar = () => {
+    if (window.scrollY > 50) {
+      setScrollPage(true);
+    } else {
+      setScrollPage(false);
+    }
+  };
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
   };
+  window.addEventListener("scroll", fixNavBar);
 
   const hideMenu = () => {
     setMenuVisible(false);
@@ -59,6 +66,15 @@ const Header = () => {
         toast.error(error.message);
       });
   };
+
+  const cart = (
+    <span className={styles.cart}>
+      <Link to="/cart">
+        Cart <FaShoppingCart size={20} />
+        <p>{cartTotalQuantity}</p>
+      </Link>
+    </span>
+  );
 
   // Monitor currently signed in user
   useEffect(() => {
@@ -96,7 +112,7 @@ const Header = () => {
   }, [dispatch, userName]);
 
   return (
-    <header>
+    <header className={scrollPage ? styles.fixed : null}>
       <div className={styles.header}>
         {logo}
         <nav

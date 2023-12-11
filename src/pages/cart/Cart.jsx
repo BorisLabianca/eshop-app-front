@@ -5,10 +5,12 @@ import { FaTrashAlt } from "react-icons/fa";
 import Card from "../../components/card/Card";
 import {
   ADD_TO_CART,
+  CALCULATE_TOTAL,
   CLEAR_CART,
   DECREASE_CART,
   REMOVE_FROM_CART,
 } from "../../redux/features/cartSlice";
+import { useEffect } from "react";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -30,6 +32,10 @@ const Cart = () => {
   const clearCart = () => {
     dispatch(CLEAR_CART());
   };
+
+  useEffect(() => {
+    dispatch(CALCULATE_TOTAL());
+  }, [cartItems, dispatch]);
 
   return (
     <section>
@@ -119,7 +125,7 @@ const Cart = () => {
                     cartTotalQuantity > 1 ? "s" : ""
                   }: ${cartTotalQuantity}`}</p>
                   <div className={styles.text}>
-                    <h4>Subtotal:</h4>
+                    <h4>Total:</h4>
                     <h3>${cartTotalAmount.toFixed(2)}</h3>
                   </div>
                   <p>Tax and shipping calculated at checkout.</p>

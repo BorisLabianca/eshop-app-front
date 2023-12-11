@@ -68,10 +68,27 @@ const cartSlice = createSlice({
       });
       localStorage.removeItem("cartItems");
     },
+    CALCULATE_TOTAL: (state, action) => {
+      const array = [];
+      state.cartItems.map((item) => {
+        const { price, cartQuantity } = item;
+        const itemAmount = price * cartQuantity;
+        return array.push(itemAmount);
+      });
+      const totalAmount = array.reduce((a, b) => {
+        return a + b;
+      });
+      state.cartTotalAmount = totalAmount;
+    },
   },
 });
 
-export const { ADD_TO_CART, DECREASE_CART, REMOVE_FROM_CART, CLEAR_CART } =
-  cartSlice.actions;
+export const {
+  ADD_TO_CART,
+  DECREASE_CART,
+  REMOVE_FROM_CART,
+  CLEAR_CART,
+  CALCULATE_TOTAL,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

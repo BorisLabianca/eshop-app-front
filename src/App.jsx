@@ -2,7 +2,15 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // Pages
-import { Home, Contact, Login, Register, Reset, Admin } from "./pages/index";
+import {
+  Home,
+  Contact,
+  Login,
+  Register,
+  Reset,
+  Admin,
+  Cart,
+} from "./pages/index";
 
 // Components
 import { Footer, Header } from "./components/index";
@@ -32,6 +40,7 @@ function App() {
             }
           />
           <Route path="/product-details/:id" element={<ProductDetails />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="*" element={<FallBackPage />} />
         </Routes>
         <Footer

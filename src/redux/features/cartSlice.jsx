@@ -29,7 +29,7 @@ const cartSlice = createSlice({
           position: "top-left",
         });
       }
-      localStorage.setItem("cart", JSON.stringify(state.cartItems));
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
   },
 });

@@ -5,6 +5,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import Card from "../../components/card/Card";
 import {
   ADD_TO_CART,
+  CLEAR_CART,
   DECREASE_CART,
   REMOVE_FROM_CART,
 } from "../../redux/features/cartSlice";
@@ -24,6 +25,10 @@ const Cart = () => {
 
   const removeFromCart = (item) => {
     dispatch(REMOVE_FROM_CART(item));
+  };
+
+  const clearCart = () => {
+    dispatch(CLEAR_CART());
   };
 
   return (
@@ -101,7 +106,9 @@ const Cart = () => {
               </tbody>
             </table>
             <div className={styles.summary}>
-              <button className="--btn --btn-danger">Clear Cart</button>
+              <button className="--btn --btn-danger" onClick={clearCart}>
+                Clear Cart
+              </button>
               <div className={styles.checkout}>
                 <div>
                   <Link to="/#products">&larr; Continue Shopping</Link>

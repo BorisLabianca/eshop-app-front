@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./Cart.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaTrashAlt } from "react-icons/fa";
 import Card from "../../components/card/Card";
 import {
@@ -10,14 +10,19 @@ import {
   CLEAR_CART,
   DECREASE_CART,
   REMOVE_FROM_CART,
+  SAVE_PREVIOUS_URL,
 } from "../../redux/features/cartSlice";
 import { useEffect } from "react";
 
 const Cart = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { cartItems, cartTotalQuantity, cartTotalAmount } = useSelector(
     (store) => store.cart
   );
+  const { isLoggedIn } = useSelector((store) => store.auth);
+  const url = window.location.href;
+
   const increaseCart = (item) => {
     dispatch(ADD_TO_CART(item));
   };
@@ -34,9 +39,19 @@ const Cart = () => {
     dispatch(CLEAR_CART());
   };
 
+  const checkout = () => {
+    if (isLoggedIn) {
+      navigate("/checkout-details");
+    } else {
+      dispatch(SAVE_PREVIOUS_URL(url));
+      navigate("/login");
+    }
+  };
+
   useEffect(() => {
     dispatch(CALCULATE_TOTAL());
     dispatch(CALCULATE_TOTAL_QUANTITY());
+    dispatch(SAVE_PREVIOUS_URL(""));
   }, [cartItems, dispatch]);
 
   return (
@@ -71,14 +86,16 @@ const Cart = () => {
                     <tr key={id}>
                       <td>{index + 1}</td>
                       <td>
-                        <p>
-                          <b>{name}</b>
-                        </p>
-                        <img
-                          src={imageURL}
-                          alt={name}
-                          style={{ width: "100px" }}
-                        />
+                        <Link to={`/product-details/${id}`}>
+                          <p>
+                            <b>{name}</b>
+                          </p>
+                          <img
+                            src={imageURL}
+                            alt={name}
+                            style={{ width: "100px" }}
+                          />
+                        </Link>
                       </td>
                       <td>${price}</td>
                       <td>
@@ -133,7 +150,10 @@ const Cart = () => {
                     <h3>${cartTotalAmount.toFixed(2)}</h3>
                   </div>
                   <p>Tax and shipping calculated at checkout.</p>
-                  <button className="--btn --btn-primary --btn-block">
+                  <button
+                    className="--btn --btn-primary --btn-block"
+                    onClick={checkout}
+                  >
                     Checkout
                   </button>
                 </Card>

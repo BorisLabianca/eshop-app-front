@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./CheckoutDetails.module.scss";
 import Card from "../../components/card/Card";
 import { CountryDropdown } from "react-country-region-selector";
@@ -9,6 +9,10 @@ import {
 } from "../../redux/features/checkoutSlice";
 import { useNavigate } from "react-router-dom";
 import CheckoutSummary from "../../components/checkoutSummary/CheckoutSummary";
+import {
+  CALCULATE_TOTAL,
+  CALCULATE_TOTAL_QUANTITY,
+} from "../../redux/features/cartSlice";
 
 const initialAddressState = {
   name: "",
@@ -47,6 +51,10 @@ const CheckoutDetails = () => {
     dispatch(SAVE_BILLING_ADDRESS(billingAddress));
     navigate("/checkout");
   };
+  useEffect(() => {
+    dispatch(CALCULATE_TOTAL());
+    dispatch(CALCULATE_TOTAL_QUANTITY());
+  }, [dispatch]);
 
   return (
     <section>

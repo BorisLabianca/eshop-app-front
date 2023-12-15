@@ -9,13 +9,24 @@ import Card from "../card/Card";
 import CheckoutSummary from "../checkoutSummary/CheckoutSummary";
 import spinner from "../../assets/spinner.jpg";
 import { toast } from "react-toastify";
+import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { db } from "../../firebase/config";
+import { useDispatch, useSelector } from "react-redux";
+import { CLEAR_CART } from "../../redux/features/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutForm = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
 
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { userId, email } = useSelector((store) => store.auth);
+  const { cartItems, cartTotalAmount } = useSelector((store) => store.cart);
+  const { shippingAddress } = useSelector((store) => store.checkout);
 
   useEffect(() => {
     if (!stripe) {
@@ -32,7 +43,29 @@ const CheckoutForm = () => {
   }, [stripe]);
 
   const saveOrder = () => {
-    console.log("Order Saved");
+    const today = new Date();
+    const date = today.toDateString();
+    const time = today.toLocaleTimeString();
+    const orderConfig = {
+      userId,
+      email,
+      orderDate: date,
+      orderTime: time,
+      orderAmount: cartTotalAmount,
+      orderStatus: "Order placed",
+      cartItems,
+      shippingAddress,
+      createdAt: Timestamp.now().toDate(),
+    };
+
+    try {
+      addDoc(collection(db, "orders"), orderConfig);
+      dispatch(CLEAR_CART());
+      toast.success("Order saved.");
+      navigate("/checkout-success");
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -52,6 +85,7 @@ const CheckoutForm = () => {
           // Make sure to change this to your payment completion page
           return_url: "http://localhost:5173/checkout-success",
         },
+        redirect: "if_required",
       })
       .then((result) => {
         // ok - paymentIntent // bad - error
@@ -68,7 +102,6 @@ const CheckoutForm = () => {
           }
         }
       });
-    console.log(confirmPayment);
 
     setIsLoading(false);
   };

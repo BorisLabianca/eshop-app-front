@@ -7,9 +7,6 @@ const CheckoutSummary = () => {
   const { cartItems, cartTotalAmount, cartTotalQuantity } = useSelector(
     (store) => store.cart
   );
-  console.log(cartItems);
-  console.log(cartTotalAmount);
-  console.log(cartTotalQuantity);
 
   return (
     <div>

@@ -2,14 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./ViewProducts.module.scss";
 import { toast } from "react-toastify";
 import { db, storage } from "../../../firebase/config";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  onSnapshot,
-  orderBy,
-  query,
-} from "firebase/firestore";
+import { deleteDoc, doc } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import Loader from "../../loader/Loader";
@@ -18,15 +11,23 @@ import Notiflix from "notiflix";
 import { useDispatch, useSelector } from "react-redux";
 import { STORE_PRODUCTS } from "../../../redux/features/productSlice";
 import useFetchCollection from "../../../customHooks/useFetchCollection";
+import Search from "../../search/Search";
+import { FILTER_BY_SEARCH } from "../../../redux/features/filterSlice";
 
 const ViewProducts = () => {
   const { data, isLoading } = useFetchCollection("products");
   const dispatch = useDispatch();
   const { products } = useSelector((store) => store.product);
+  const { filteredProducts } = useSelector((store) => store.filter);
+  const [searchResult, setSearchResult] = useState("");
 
   useEffect(() => {
     dispatch(STORE_PRODUCTS({ products: data }));
   }, [data, dispatch]);
+
+  useEffect(() => {
+    dispatch(FILTER_BY_SEARCH({ products, searchResult }));
+  }, [searchResult, products, dispatch]);
 
   const deleteProduct = async (id, imageURL) => {
     try {
@@ -64,7 +65,17 @@ const ViewProducts = () => {
       {isLoading && <Loader />}
       <div className={styles.table}>
         <h2>All Products</h2>
-        {products.length === 0 ? (
+        <div className={styles.search}>
+          <p>
+            <b>{filteredProducts.length}</b> poduct
+            {filteredProducts.length > 1 && "s"} found
+          </p>
+          <Search
+            value={searchResult}
+            onChange={(event) => setSearchResult(event.target.value)}
+          />
+        </div>
+        {filteredProducts.length === 0 ? (
           <p>No products found...</p>
         ) : (
           <table>
@@ -79,7 +90,7 @@ const ViewProducts = () => {
               </tr>
             </thead>
             <tbody>
-              {products.map((product, index) => {
+              {filteredProducts.map((product, index) => {
                 const { id, name, price, category, imageURL } = product;
                 return (
                   <tr key={id}>

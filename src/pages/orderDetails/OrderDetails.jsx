@@ -12,7 +12,6 @@ const OrderDetails = () => {
   useEffect(() => {
     setOrder(document);
   }, [document]);
-  console.log(order);
 
   return (
     <section>

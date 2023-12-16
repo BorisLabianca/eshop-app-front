@@ -24,6 +24,7 @@ import "./App.css";
 import AdminOnlyRoute from "./components/adminOnlyRoute/AdminOnlyRoute";
 import FallBackPage from "./pages/FallBackPage";
 import ProductDetails from "./components/product/productDetails/ProductDetails";
+import ReviewProducts from "./components/reviewProducts/ReviewProducts";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
           <Route path="/checkout-success" element={<CheckoutSuccess />} />
           <Route path="/order-history" element={<OrderHistory />} />
           <Route path="/order-details/:id" element={<OrderDetails />} />
+          <Route path="/review-product/:id" element={<ReviewProducts />} />
           <Route path="*" element={<FallBackPage />} />
         </Routes>
         <Footer

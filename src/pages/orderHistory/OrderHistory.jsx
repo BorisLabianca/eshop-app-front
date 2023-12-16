@@ -20,6 +20,8 @@ const OrderHistory = () => {
   useEffect(() => {
     dispatch(STORE_ORDERS(data));
   }, [dispatch, data]);
+
+  const filteredOrders = orders.filter((order) => order.userId === userId);
   return (
     <section>
       <div className={`container ${styles.order}`}>
@@ -31,7 +33,7 @@ const OrderHistory = () => {
         <>
           {isLoading && <Loader />}
           <div className={styles.table}>
-            {orders.length === 0 ? (
+            {filteredOrders.length === 0 ? (
               <p>No orders found.</p>
             ) : (
               <table>
@@ -46,7 +48,7 @@ const OrderHistory = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {orders.map((order, index) => {
+                  {filteredOrders.map((order, index) => {
                     const {
                       id,
                       orderDate,
@@ -65,7 +67,7 @@ const OrderHistory = () => {
                           <img
                             src={cartItems[0].imageURL}
                             alt={cartItems[0].name}
-                            width={80}
+                            width={50}
                           />
                         </td>
                         <td>

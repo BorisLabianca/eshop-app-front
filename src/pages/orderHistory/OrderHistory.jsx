@@ -54,7 +54,6 @@ const OrderHistory = () => {
                       orderTime,
                       orderAmount,
                       orderStatus,
-                      cartItems,
                     } = order;
                     return (
                       <tr key={id} onClick={() => handleClick(id)}>

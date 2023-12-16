@@ -22,7 +22,6 @@ const orderSlice = createSlice({
         return a + b;
       }, 0);
       state.totalOrderAmount = totalAmount;
-      console.log(totalAmount);
     },
   },
 });

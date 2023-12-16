@@ -15,7 +15,7 @@ const stripePromise = loadStripe(
 
 const Checkout = () => {
   const dispatch = useDispatch();
-  const [message, setMessage] = useState("Initializing checkout.");
+  const [message, setMessage] = useState("Initializing checkout...");
   const [clientSecret, setClientSecret] = useState("");
   const { cartItems, cartTotalAmount } = useSelector((store) => store.cart);
   const { email: customerEmail } = useSelector((store) => store.auth);

@@ -10,6 +10,10 @@ import {
   Reset,
   Admin,
   Cart,
+  OrderHistory,
+  Checkout,
+  CheckoutDetails,
+  CheckoutSuccess,
 } from "./pages/index";
 
 // Components
@@ -19,9 +23,7 @@ import "./App.css";
 import AdminOnlyRoute from "./components/adminOnlyRoute/AdminOnlyRoute";
 import FallBackPage from "./pages/FallBackPage";
 import ProductDetails from "./components/product/productDetails/ProductDetails";
-import CheckoutDetails from "./pages/checkout/CheckoutDetails";
-import Checkout from "./pages/checkout/Checkout";
-import CheckoutSuccess from "./pages/checkout/CheckoutSuccess";
+
 function App() {
   return (
     <>
@@ -47,6 +49,7 @@ function App() {
           <Route path="/checkout-details" element={<CheckoutDetails />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/checkout-success" element={<CheckoutSuccess />} />
+          <Route path="/order-history" element={<OrderHistory />} />
           <Route path="*" element={<FallBackPage />} />
         </Routes>
         <Footer

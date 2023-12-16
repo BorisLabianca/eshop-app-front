@@ -20,7 +20,9 @@ const CheckoutSuccess = () => {
         <p>Thank you for your purchase.</p>
         <br />
         <button className="--btn --btn-primary">
-          <Link to="/order-history">View Order Status</Link>
+          <Link className="--text-light" to="/order-history">
+            View Order Status
+          </Link>
         </button>
       </div>
     </section>

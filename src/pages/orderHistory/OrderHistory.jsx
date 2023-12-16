@@ -40,7 +40,6 @@ const OrderHistory = () => {
                 <thead>
                   <tr>
                     <th>S/N</th>
-                    <th>Product</th>
                     <th>Date</th>
                     <th>Order ID</th>
                     <th>Order Amount</th>
@@ -61,14 +60,6 @@ const OrderHistory = () => {
                       <tr key={id} onClick={() => handleClick(id)}>
                         <td>
                           <b>{index + 1}</b>
-                        </td>
-                        <td>
-                          <p>{cartItems[0].name}</p>
-                          <img
-                            src={cartItems[0].imageURL}
-                            alt={cartItems[0].name}
-                            width={50}
-                          />
                         </td>
                         <td>
                           {orderDate} at {orderTime}

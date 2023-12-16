@@ -68,8 +68,12 @@ const OrderHistory = () => {
                         <td>
                           <p
                             className={
-                              orderStatus !== "Delivered"
+                              orderStatus === "Order placed"
                                 ? styles.pending
+                                : orderStatus === "Processing"
+                                ? styles.processing
+                                : orderStatus === "Shipped"
+                                ? styles.shipped
                                 : styles.delivered
                             }
                           >

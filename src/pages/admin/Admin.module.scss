@@ -1,5 +1,6 @@
 .admin {
   display: flex;
+  min-height: calc(100vh - 8rem * 2);
 
   .navbar {
     width: 25%;

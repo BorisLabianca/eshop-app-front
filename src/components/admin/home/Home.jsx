@@ -11,6 +11,7 @@ import {
   CALCULATE_TOTAL_ORDER_AMOUNT,
   STORE_ORDERS,
 } from "../../../redux/features/orderSlice";
+import Chart from "../../chart/Chart";
 
 const earningIcon = <AiFillDollarCircle size={30} color="#b624ff" />;
 const productIcon = <BsCart4 size={30} color="#1f93ff" />;
@@ -53,6 +54,9 @@ const Home = () => {
           count={orderHistory.length}
           icon={orderIcon}
         />
+      </div>
+      <div>
+        <Chart />
       </div>
     </div>
   );

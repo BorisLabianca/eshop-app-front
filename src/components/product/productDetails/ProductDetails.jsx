@@ -12,23 +12,14 @@ import {
   DECREASE_CART,
   REMOVE_FROM_CART,
 } from "../../../redux/features/cartSlice";
+import useFetchDocument from "../../../customHooks/useFetchDocument";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const [product, setProduct] = useState(null);
 
-  const getProduct = async () => {
-    const docRef = doc(db, "products", id);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const obj = { id, ...docSnap.data() };
-      setProduct(obj);
-    } else {
-      toast.error("Product not found...");
-    }
-  };
+  const { document } = useFetchDocument("products", id);
 
   const { cartItems } = useSelector((state) => state.cart);
   const cart = cartItems.find((item) => item.id === id);
@@ -49,8 +40,8 @@ const ProductDetails = () => {
   };
 
   useEffect(() => {
-    getProduct();
-  }, []);
+    setProduct(document);
+  }, [document]);
 
   return (
     <section>

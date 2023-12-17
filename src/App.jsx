@@ -15,6 +15,7 @@ import {
   CheckoutDetails,
   CheckoutSuccess,
   OrderDetails,
+  FallBackPage,
 } from "./pages/index";
 
 // Components
@@ -22,7 +23,6 @@ import { Footer, Header } from "./components/index";
 
 import "./App.css";
 import AdminOnlyRoute from "./components/adminOnlyRoute/AdminOnlyRoute";
-import FallBackPage from "./pages/FallBackPage";
 import ProductDetails from "./components/product/productDetails/ProductDetails";
 import ReviewProducts from "./components/reviewProducts/ReviewProducts";
 

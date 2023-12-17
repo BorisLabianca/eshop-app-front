@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import styles from "./Pagination.module.scss";
 
@@ -10,7 +11,7 @@ const Pagination = ({
   const pageNumbers = [];
   const totalPages = totalProducts / productsPerPage;
   // Limit page numbers shown
-  const [pageNumberLimit, setPageNumberLimit] = useState(5);
+  const [pageNumberLimit] = useState(5);
   const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
   const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
   // Pagination

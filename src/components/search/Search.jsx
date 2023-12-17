@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { BiSearch } from "react-icons/bi";
 import styles from "./Search.module.scss";
 

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import styles from "./ProductList.module.scss";
 import { BsFillGridFill } from "react-icons/bs";
@@ -18,7 +19,7 @@ const ProductList = ({ products }) => {
   const [searchResult, setSearchResult] = useState("");
   const [sorts, setSorts] = useState("latest");
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage, setProductsPerPage] = useState(9);
+  const [productsPerPage] = useState(9);
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = filteredProducts.slice(

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import styles from "./AddProduct.module.scss";
 import Card from "../../card/Card";

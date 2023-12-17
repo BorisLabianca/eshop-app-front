@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import styles from "./ChangeOrderStatus.module.scss";
 import Loader from "../../loader/Loader";

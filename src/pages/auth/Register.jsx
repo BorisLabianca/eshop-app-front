@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import registerImg from "../../assets/register.png";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./auth.module.scss";

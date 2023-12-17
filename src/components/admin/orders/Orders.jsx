@@ -11,7 +11,6 @@ const Orders = () => {
   const navigate = useNavigate();
   const { data, isLoading } = useFetchCollection("orders");
   const orders = useSelector((store) => store.orders.orderHistory);
-  const { userId } = useSelector((store) => store.auth);
 
   const handleClick = (id) => {
     navigate(`/admin/order-details/${id}`);

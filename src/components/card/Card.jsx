@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import styles from "./Card.module.scss";
 
 const Card = ({ children, cardClass }) => {

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import loginImg from "../../assets/login.png";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./auth.module.scss";
@@ -105,7 +106,7 @@ const Login = () => {
               <p className="--text-light">Login With Google</p>
             </button>
             <span className={styles.register}>
-              <p>Don't have an account?</p>
+              <p>Do not have an account?</p>
               <Link to="/register">Register</Link>
             </span>
           </div>

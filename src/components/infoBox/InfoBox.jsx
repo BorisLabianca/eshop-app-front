@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Card from "../card/Card";
 import styles from "./InfoBox.module.scss";
 

@@ -13,7 +13,7 @@ const Contact = () => {
 
     emailjs
       .sendForm(
-        "service_e1a402i",
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
         "template_desirjg",
         form.current,
         "n-fp_YKPBDTIHt-vN"

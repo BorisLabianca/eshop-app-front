@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import styles from "./Footer.module.scss";
 

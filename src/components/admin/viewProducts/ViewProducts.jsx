@@ -22,7 +22,7 @@ const ViewProducts = () => {
   const { filteredProducts } = useSelector((store) => store.filter);
   const [searchResult, setSearchResult] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage, setProductsPerPage] = useState(5);
+  const [productsPerPage] = useState(5);
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = filteredProducts.slice(

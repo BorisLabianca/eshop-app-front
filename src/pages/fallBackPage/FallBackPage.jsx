@@ -6,7 +6,7 @@ const FallBackPage = () => {
       <div className="--center-all">
         <h1 className="--text-center">Oops... Something went wrong.</h1>
         <p className="--text-center --text-md">
-          The page you are looking for doesn't exist
+          The page you are looking for does not exist.
         </p>
         <br />
         <Link to="/">
